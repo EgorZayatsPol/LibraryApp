@@ -1,52 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LibraryApp_V1._0.Publications;
+
 
 namespace LibraryApp_V1._0.Models
 {
     class Library
     {
-        private static Library _instance;
-        private List<Book> _books;
-        private List<Reader> _readers;
+        private List<Publication> _publications = new List<Publication>();
 
-        public List<Book> Books => _books;
-        public List<Reader> Readers => _readers;
-
-        private Library()
+        public void AddPublication(Publication publication)
         {
-            _books = new List<Book>();
-            _readers = new List<Reader>();
+            if (publication == null)
+                throw new ArgumentNullException(nameof(publication));
+
+            _publications.Add(publication);
         }
 
-        public static Library Instance
+        public void PrintAll()
         {
-            get
+            if (_publications.Count == 0)
             {
-                if (_instance == null)
-                    _instance = new Library();
-                return _instance;
+                Console.WriteLine("Library is empty.");
+                return;
             }
-        }
-        public void AddBook(Book book)
-        {
-            _books.Add(book);
-        }
-        public void AddReader(Reader reader)
-        {
-            _readers.Add(reader);
-        }
-        public Book FindBook(string title)
-        {
-            foreach (var book in _books)
-            {
-                if (book.Title == title)
-                    return book;
-            }
-            return null;
+
+            foreach (var p in _publications)
+                p.PrintInfo();
         }
 
+        public Publication FindByTitle(string title)
+        {
+            return _publications
+                .FirstOrDefault(p => p.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

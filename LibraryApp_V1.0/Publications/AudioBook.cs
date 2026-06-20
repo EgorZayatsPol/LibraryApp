@@ -24,7 +24,7 @@ namespace LibraryApp_V1._0.Publications
             
         public string Narrator => _narrator;
 
-        public AudioBook(string title, int year, int duration, string narrator) : base(title, year)
+        public AudioBook(string title, int year, string narrator, int duration) : base(title, year)
         {
             _duration = duration;
             _narrator = narrator;
